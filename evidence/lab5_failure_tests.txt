@@ -1,0 +1,4 @@
+1) analyst name too short:
+{"error": "Enter the approving analyst name"}
+2) action not in the incident plan:
+{"error": "Action is not in the incident plan"}

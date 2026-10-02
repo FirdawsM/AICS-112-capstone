@@ -1,0 +1,5 @@
+SOAR-0001 critical [('create_case', 'simulated', True), ('notify_analyst', 'simulated', True), ('collect_endpoint_triage', 'simulated', True), ('isolate_endpoint', 'awaiting_approval', True), ('disable_identity', 'awaiting_approval', True)]
+SOAR-0002 low [('create_case', 'simulated', True)]
+SOAR-0003 low [('create_case', 'simulated', True)]
+SOAR-0004 low [('create_case', 'simulated', True)]
+SOAR-0005 medium [('create_case', 'simulated', True), ('notify_analyst', 'simulated', True)]

@@ -1,0 +1,11 @@
+pending run, awaiting_approval count:
+2
+approved run, awaiting_approval count:
+0
+dry_run true lines (pending, approved):
+output/lab5_pending/audit_log.jsonl:10
+output/lab5_approved/audit_log.jsonl:10
+total lines:
+  10 output/lab5_pending/audit_log.jsonl
+  10 output/lab5_approved/audit_log.jsonl
+  20 total

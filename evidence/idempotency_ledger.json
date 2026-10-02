@@ -1,0 +1,16 @@
+{
+  "0db560e4a3915902ca07eaa185c4ab995846e74d6f2a1760ab83d20db8d4faa8": {
+    "incident_id": "SOAR-0001",
+    "entity_id": "FIN-LT-044",
+    "action": "isolate_endpoint",
+    "status": "simulated",
+    "dry_run": true
+  },
+  "54b079e4a896e0b035d9402cd9d70a2b27677fcbc79ab5fd3cf88ffe8ca4bbfa": {
+    "incident_id": "SOAR-0001",
+    "entity_id": "amina.bello",
+    "action": "disable_identity",
+    "status": "simulated",
+    "dry_run": true
+  }
+}
