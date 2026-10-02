@@ -65,7 +65,12 @@ def normalize_event(raw: dict) -> dict:
         raise ValueError(f"Timestamp must include a timezone: {raw['timestamp']}")
     # TODO LAB 2: return a copy with UTC timestamp, bounded integer severity,
     # lowercase source, and lowercase event_type. Keep the input unmodified.
-    raise NotImplementedError("Complete normalize_event in Lab 2")
+    result = dict(raw)
+    result["timestamp"] = parsed.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    result["severity"] = max(0, min(100, int(raw["severity"])))
+    result["source"] = str(raw["source"]).lower()
+    result["event_type"] = str(raw["event_type"]).lower()
+    return result
 
 
 def enrich_event(event: dict, assets: dict[str, dict], identities: dict[str, dict], indicators: list[dict]) -> dict:
