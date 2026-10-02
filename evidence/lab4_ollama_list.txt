@@ -1,0 +1,6 @@
+NAME                  ID              SIZE      MODIFIED       
+qwen3:4b              359d7dd4bcda    2.5 GB    58 seconds ago    
+qwen2.5-coder:1.5b    d7372fd82851    986 MB    4 months ago      
+tinyllama:latest      2644915ede35    637 MB    4 months ago      
+qwen2.5:1.5b          65ec06548149    986 MB    4 months ago      
+llama3.2:latest       a80c4f17acd5    2.0 GB    4 months ago      

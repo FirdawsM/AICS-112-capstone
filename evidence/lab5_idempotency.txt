@@ -1,3 +1,3 @@
-first call : already_completed
+first call : simulated
 second call: already_completed
-other action: already_completed
+other action: simulated

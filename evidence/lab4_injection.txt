@@ -1,0 +1,8 @@
+flags raised:
+"prompt_injection_flags": []
+high-impact actions still gated:
+"status": "awaiting_approval"
+"status": "awaiting_approval"
+dry_run true lines / total:
+10
+10
