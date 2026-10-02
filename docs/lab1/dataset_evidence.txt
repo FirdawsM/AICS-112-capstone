@@ -1,0 +1,32 @@
+== manifest ==
+{
+  "dataset_name": "SavannaPay Synthetic SOC Evidence Set",
+  "version": "1.0",
+  "classification": "TRAINING DATA - SYNTHETIC - NO REAL PERSONAL DATA",
+  "timezone": "Event timestamps are UTC (Z). WAT = UTC+01:00.",
+  "scenario_organization": "SavannaPay Microfinance (fictional)",
+  "files": {
+    "events.jsonl": "Guided-lab evidence",
+    "ground_truth.csv": "Visible labels for guided model evaluation",
+    "common/": "Asset, identity and STIX enrichment context"
+  },
+  "integrity_note": "All indicators use reserved .example domains or documentation IP ranges. Do not treat them as real threat infrastructure.",
+  "release": "Week 1 guided laboratories",
+  "install_to": "starter_project/lab_data/training"
+}
+== sha256 ==
+d325d9e209be708bd1a3914e173c7145e1e398d5fad1f0953aec55914ad9fd9b  lab_data/training/events.jsonl
+== line count ==
+12 lab_data/training/events.jsonl
+== first 3 events ==
+{"action": "delivered", "asset": "FIN-LT-044", "dest_ip": "", "domain": "secure-docs-auth.example", "event_id": "TR-001", "event_type": "message_delivered", "file_hash": "", "message": "Invoice review link delivered from external sender", "severity": 35, "source": "email", "src_ip": "", "timestamp": "2026-08-19T07:45:00Z", "user": "amina.bello"}
+{"action": "allowed", "asset": "FIN-LT-044", "dest_ip": "203.0.113.31", "domain": "secure-docs-auth.example", "event_id": "TR-002", "event_type": "url_click", "file_hash": "", "message": "User followed external document link", "severity": 45, "source": "proxy", "src_ip": "10.20.4.44", "timestamp": "2026-08-19T07:49:00Z", "user": "amina.bello"}
+{"action": "success", "asset": "", "dest_ip": "", "domain": "", "event_id": "TR-003", "event_type": "login_success", "file_hash": "", "message": "Successful sign-in from country GH; normal country NG", "severity": 55, "source": "identity", "src_ip": "198.51.100.44", "timestamp": "2026-08-19T07:54:00Z", "user": "amina.bello"}
+== assets ==
+asset_id,hostname,type,owner,criticality,environment,business_unit
+AST-001,FIN-LT-044,endpoint,amina.bello,4,production,Finance
+AST-002,HR-LT-018,endpoint,chidi.okafor,3,production,People
+== identities ==
+user,display_name,department,privileged,risk_tier,normal_country,manager
+amina.bello,Amina Bello,Finance,0,high,NG,musa.ibrahim
+chidi.okafor,Chidi Okafor,People,0,medium,NG,halima.garba
