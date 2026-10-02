@@ -75,8 +75,18 @@ def normalize_event(raw: dict) -> dict:
 
 def enrich_event(event: dict, assets: dict[str, dict], identities: dict[str, dict], indicators: list[dict]) -> dict:
     # TODO LAB 3: add asset criticality, business unit, identity privilege,
-    # identity risk tier, IOC matches (confidence >= 70), and ioc_match boolean.
-    raise NotImplementedError("Complete enrich_event in Lab 3")
+    result = dict(event)
+    asset = assets.get(event.get("asset", ""), {})
+    identity = identities.get(event.get("user", ""), {})
+    result["asset_criticality"] = int(asset.get("criticality", 0) or 0)
+    result["business_unit"] = asset.get("business_unit", "")
+    result["privileged_identity"] = int(identity.get("privileged", 0) or 0)
+    result["identity_risk_tier"] = identity.get("risk_tier", "")
+    observed = {str(event.get(k, "")).lower() for k in ("domain", "src_ip", "dest_ip", "file_hash")} - {""}
+    matches = [i for i in indicators if i["value"] in observed and i["confidence"] >= 70]
+    result["ioc_matches"] = matches
+    result["ioc_match"] = bool(matches)
+    return result
 
 
 def correlate(events: list[dict], window_minutes: int = 45) -> list[list[dict]]:

@@ -1,0 +1,23 @@
+test_enrichment_adds_context_and_ioc (test_pipeline.PipelineTests.test_enrichment_adds_context_and_ioc) ... ok
+test_hash_chain_detectable (test_pipeline.PipelineTests.test_hash_chain_detectable) ... ok
+test_naive_timestamp_rejected (test_pipeline.PipelineTests.test_naive_timestamp_rejected) ... ok
+test_normalize_timestamp_and_fields (test_pipeline.PipelineTests.test_normalize_timestamp_and_fields) ... ok
+test_prompt_injection_flag (test_pipeline.PipelineTests.test_prompt_injection_flag) ... ok
+test_score_is_explainable (test_pipeline.PipelineTests.test_score_is_explainable) ... ERROR
+test_severity_boundaries (test_pipeline.PipelineTests.test_severity_boundaries) ... ok
+
+======================================================================
+ERROR: test_score_is_explainable (test_pipeline.PipelineTests.test_score_is_explainable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/firdos/Downloads/ICS-112_Capstone_Project/AICS-112_Submission/tests/test_pipeline.py", line 37, in test_score_is_explainable
+    score, explanation = score_group(group)
+                         ^^^^^^^^^^^^^^^^^^
+  File "/home/firdos/Downloads/ICS-112_Capstone_Project/AICS-112_Submission/soar_lab/pipeline.py", line 128, in score_group
+    raise NotImplementedError("Complete score_group in Lab 4")
+NotImplementedError: Complete score_group in Lab 4
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (errors=1)
