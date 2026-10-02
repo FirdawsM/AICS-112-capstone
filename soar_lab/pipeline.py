@@ -63,8 +63,6 @@ def normalize_event(raw: dict) -> dict:
     parsed = datetime.fromisoformat(stamp)
     if parsed.tzinfo is None:
         raise ValueError(f"Timestamp must include a timezone: {raw['timestamp']}")
-    # TODO LAB 2: return a copy with UTC timestamp, bounded integer severity,
-    # lowercase source, and lowercase event_type. Keep the input unmodified.
     result = dict(raw)
     result["timestamp"] = parsed.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     result["severity"] = max(0, min(100, int(raw["severity"])))
@@ -74,7 +72,6 @@ def normalize_event(raw: dict) -> dict:
 
 
 def enrich_event(event: dict, assets: dict[str, dict], identities: dict[str, dict], indicators: list[dict]) -> dict:
-    # TODO LAB 3: add asset criticality, business unit, identity privilege,
     result = dict(event)
     asset = assets.get(event.get("asset", ""), {})
     identity = identities.get(event.get("user", ""), {})
@@ -122,8 +119,6 @@ def incident_features(group: list[dict]) -> dict[str, int]:
 
 
 def score_group(group: list[dict]) -> tuple[int, dict]:
-    # TODO LAB 4: calculate a logistic probability from FEATURE_WEIGHTS,
-    # combine 70% model probability with 30% maximum event severity, and return
     features = incident_features(group)
     z = FEATURE_WEIGHTS["intercept"] + sum(FEATURE_WEIGHTS[k] * v for k, v in features.items())
     probability = 1 / (1 + math.exp(-z))

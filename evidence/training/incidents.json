@@ -1,0 +1,605 @@
+[
+  {
+    "incident_id": "SOAR-0001",
+    "event_ids": [
+      "TR-001",
+      "TR-002",
+      "TR-003",
+      "TR-004",
+      "TR-005",
+      "TR-006",
+      "TR-007",
+      "TR-008"
+    ],
+    "entities": {
+      "users": [
+        "amina.bello"
+      ],
+      "assets": [
+        "FIN-LT-044"
+      ]
+    },
+    "sources": [
+      "email",
+      "endpoint",
+      "identity",
+      "network",
+      "proxy"
+    ],
+    "evidence": [
+      {
+        "event_id": "TR-001",
+        "timestamp": "2026-08-19T07:45:00Z",
+        "source": "email",
+        "event_type": "message_delivered",
+        "user": "amina.bello",
+        "asset": "FIN-LT-044",
+        "message": "Invoice review link delivered from external sender",
+        "src_ip": "",
+        "dest_ip": "",
+        "domain": "secure-docs-auth.example",
+        "file_hash": "",
+        "action": "delivered",
+        "severity": 35
+      },
+      {
+        "event_id": "TR-002",
+        "timestamp": "2026-08-19T07:49:00Z",
+        "source": "proxy",
+        "event_type": "url_click",
+        "user": "amina.bello",
+        "asset": "FIN-LT-044",
+        "message": "User followed external document link",
+        "src_ip": "10.20.4.44",
+        "dest_ip": "203.0.113.31",
+        "domain": "secure-docs-auth.example",
+        "file_hash": "",
+        "action": "allowed",
+        "severity": 45
+      },
+      {
+        "event_id": "TR-003",
+        "timestamp": "2026-08-19T07:54:00Z",
+        "source": "identity",
+        "event_type": "login_success",
+        "user": "amina.bello",
+        "asset": "",
+        "message": "Successful sign-in from country GH; normal country NG",
+        "src_ip": "198.51.100.44",
+        "dest_ip": "",
+        "domain": "",
+        "file_hash": "",
+        "action": "success",
+        "severity": 55
+      },
+      {
+        "event_id": "TR-004",
+        "timestamp": "2026-08-19T07:55:00Z",
+        "source": "identity",
+        "event_type": "mfa_method_added",
+        "user": "amina.bello",
+        "asset": "",
+        "message": "New authenticator method registered",
+        "src_ip": "198.51.100.44",
+        "dest_ip": "",
+        "domain": "",
+        "file_hash": "",
+        "action": "added",
+        "severity": 70
+      },
+      {
+        "event_id": "TR-005",
+        "timestamp": "2026-08-19T08:03:00Z",
+        "source": "endpoint",
+        "event_type": "process_start",
+        "user": "amina.bello",
+        "asset": "FIN-LT-044",
+        "message": "Encoded PowerShell launched by office application",
+        "src_ip": "",
+        "dest_ip": "",
+        "domain": "",
+        "file_hash": "9d6f8f67b5f0b6c4fd0f55053f99dbf2c799a32eb7f37dfc9a1d284bcc239b51",
+        "action": "powershell -enc [REDACTED]",
+        "severity": 80
+      },
+      {
+        "event_id": "TR-006",
+        "timestamp": "2026-08-19T08:06:00Z",
+        "source": "network",
+        "event_type": "connection",
+        "user": "amina.bello",
+        "asset": "FIN-LT-044",
+        "message": "Repeated outbound TLS connection",
+        "src_ip": "10.20.4.44",
+        "dest_ip": "203.0.113.77",
+        "domain": "",
+        "file_hash": "",
+        "action": "allowed",
+        "severity": 85
+      },
+      {
+        "event_id": "TR-007",
+        "timestamp": "2026-08-19T08:10:00Z",
+        "source": "endpoint",
+        "event_type": "file_archive",
+        "user": "amina.bello",
+        "asset": "FIN-LT-044",
+        "message": "Archive finance_Q3.zip created in temporary directory",
+        "src_ip": "",
+        "dest_ip": "",
+        "domain": "",
+        "file_hash": "",
+        "action": "created",
+        "severity": 65
+      },
+      {
+        "event_id": "TR-008",
+        "timestamp": "2026-08-19T08:16:00Z",
+        "source": "network",
+        "event_type": "large_upload",
+        "user": "amina.bello",
+        "asset": "FIN-LT-044",
+        "message": "184 MB outbound transfer",
+        "src_ip": "10.20.4.44",
+        "dest_ip": "203.0.113.77",
+        "domain": "",
+        "file_hash": "",
+        "action": "allowed",
+        "severity": 90
+      }
+    ],
+    "risk_score": 97,
+    "severity": "critical",
+    "explanation": {
+      "features": {
+        "ioc_match": 1,
+        "multi_source": 1,
+        "critical_asset": 1,
+        "privileged_identity": 0,
+        "malware_signal": 1,
+        "identity_anomaly": 1,
+        "exfil_signal": 1
+      },
+      "weights": {
+        "intercept": -2.7,
+        "ioc_match": 2.35,
+        "multi_source": 1.25,
+        "critical_asset": 0.85,
+        "privileged_identity": 1.05,
+        "malware_signal": 1.75,
+        "identity_anomaly": 1.35,
+        "exfil_signal": 1.85
+      },
+      "model_probability": 0.9988,
+      "max_severity": 90
+    },
+    "ai_assist": {
+      "summary": "Observed 8 events across 5 source(s). Risk score 97/100. Evidence factors: ioc match, multi source, critical asset, malware signal, identity anomaly, exfil signal.",
+      "untrusted_evidence_preview": [
+        "Invoice review link delivered from external sender",
+        "User followed external document link",
+        "Successful sign-in from country GH; normal country NG"
+      ],
+      "prompt_injection_flags": [],
+      "advisory_only": true
+    },
+    "planned_actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case"
+      },
+      {
+        "action": "notify_analyst",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Medium-or-higher candidates require human review"
+      },
+      {
+        "action": "collect_endpoint_triage",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Read-only evidence collection"
+      },
+      {
+        "action": "isolate_endpoint",
+        "approval_required": true,
+        "dry_run": true,
+        "reason": "High-impact containment action"
+      },
+      {
+        "action": "disable_identity",
+        "approval_required": true,
+        "dry_run": true,
+        "reason": "High-impact identity action"
+      }
+    ],
+    "actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case",
+        "status": "simulated"
+      },
+      {
+        "action": "notify_analyst",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Medium-or-higher candidates require human review",
+        "status": "simulated"
+      },
+      {
+        "action": "collect_endpoint_triage",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Read-only evidence collection",
+        "status": "simulated"
+      },
+      {
+        "action": "isolate_endpoint",
+        "approval_required": true,
+        "dry_run": true,
+        "reason": "High-impact containment action",
+        "status": "awaiting_approval"
+      },
+      {
+        "action": "disable_identity",
+        "approval_required": true,
+        "dry_run": true,
+        "reason": "High-impact identity action",
+        "status": "awaiting_approval"
+      }
+    ]
+  },
+  {
+    "incident_id": "SOAR-0002",
+    "event_ids": [
+      "TR-009"
+    ],
+    "entities": {
+      "users": [
+        "wale.admin"
+      ],
+      "assets": [
+        "ADM-PAW-002"
+      ]
+    },
+    "sources": [
+      "endpoint"
+    ],
+    "evidence": [
+      {
+        "event_id": "TR-009",
+        "timestamp": "2026-08-19T07:47:00Z",
+        "source": "endpoint",
+        "event_type": "process_start",
+        "user": "wale.admin",
+        "asset": "ADM-PAW-002",
+        "message": "Approved administrative inventory script CRQ-2026-0819",
+        "src_ip": "",
+        "dest_ip": "",
+        "domain": "",
+        "file_hash": "",
+        "action": "powershell Get-ADUser",
+        "severity": 25
+      }
+    ],
+    "risk_score": 29,
+    "severity": "low",
+    "explanation": {
+      "features": {
+        "ioc_match": 0,
+        "multi_source": 0,
+        "critical_asset": 1,
+        "privileged_identity": 1,
+        "malware_signal": 0,
+        "identity_anomaly": 0,
+        "exfil_signal": 0
+      },
+      "weights": {
+        "intercept": -2.7,
+        "ioc_match": 2.35,
+        "multi_source": 1.25,
+        "critical_asset": 0.85,
+        "privileged_identity": 1.05,
+        "malware_signal": 1.75,
+        "identity_anomaly": 1.35,
+        "exfil_signal": 1.85
+      },
+      "model_probability": 0.31,
+      "max_severity": 25
+    },
+    "ai_assist": {
+      "summary": "Observed 1 events across 1 source(s). Risk score 29/100. Evidence factors: critical asset, privileged identity.",
+      "untrusted_evidence_preview": [
+        "Approved administrative inventory script CRQ-2026-0819"
+      ],
+      "prompt_injection_flags": [],
+      "advisory_only": true
+    },
+    "planned_actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case"
+      }
+    ],
+    "actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case",
+        "status": "simulated"
+      }
+    ]
+  },
+  {
+    "incident_id": "SOAR-0003",
+    "event_ids": [
+      "TR-010"
+    ],
+    "entities": {
+      "users": [
+        "svc.vulnscan"
+      ],
+      "assets": [
+        "VULN-SCAN-01"
+      ]
+    },
+    "sources": [
+      "network"
+    ],
+    "evidence": [
+      {
+        "event_id": "TR-010",
+        "timestamp": "2026-08-19T07:59:00Z",
+        "source": "network",
+        "event_type": "port_scan",
+        "user": "svc.vulnscan",
+        "asset": "VULN-SCAN-01",
+        "message": "Authorized weekly vulnerability scan CHG-4412",
+        "src_ip": "10.20.9.7",
+        "dest_ip": "10.20.5.0/24",
+        "domain": "",
+        "file_hash": "",
+        "action": "scheduled",
+        "severity": 30
+      }
+    ],
+    "risk_score": 13,
+    "severity": "low",
+    "explanation": {
+      "features": {
+        "ioc_match": 0,
+        "multi_source": 0,
+        "critical_asset": 0,
+        "privileged_identity": 0,
+        "malware_signal": 0,
+        "identity_anomaly": 0,
+        "exfil_signal": 0
+      },
+      "weights": {
+        "intercept": -2.7,
+        "ioc_match": 2.35,
+        "multi_source": 1.25,
+        "critical_asset": 0.85,
+        "privileged_identity": 1.05,
+        "malware_signal": 1.75,
+        "identity_anomaly": 1.35,
+        "exfil_signal": 1.85
+      },
+      "model_probability": 0.063,
+      "max_severity": 30
+    },
+    "ai_assist": {
+      "summary": "Observed 1 events across 1 source(s). Risk score 13/100. Evidence factors: baseline telemetry only.",
+      "untrusted_evidence_preview": [
+        "Authorized weekly vulnerability scan CHG-4412"
+      ],
+      "prompt_injection_flags": [],
+      "advisory_only": true
+    },
+    "planned_actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case"
+      }
+    ],
+    "actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case",
+        "status": "simulated"
+      }
+    ]
+  },
+  {
+    "incident_id": "SOAR-0004",
+    "event_ids": [
+      "TR-011"
+    ],
+    "entities": {
+      "users": [
+        "ngozi.eze"
+      ],
+      "assets": [
+        "MKT-LT-012"
+      ]
+    },
+    "sources": [
+      "identity"
+    ],
+    "evidence": [
+      {
+        "event_id": "TR-011",
+        "timestamp": "2026-08-19T08:21:00Z",
+        "source": "identity",
+        "event_type": "login_success",
+        "user": "ngozi.eze",
+        "asset": "MKT-LT-012",
+        "message": "Known corporate VPN exit in Nigeria",
+        "src_ip": "192.0.2.88",
+        "dest_ip": "",
+        "domain": "",
+        "file_hash": "",
+        "action": "success",
+        "severity": 15
+      }
+    ],
+    "risk_score": 9,
+    "severity": "low",
+    "explanation": {
+      "features": {
+        "ioc_match": 0,
+        "multi_source": 0,
+        "critical_asset": 0,
+        "privileged_identity": 0,
+        "malware_signal": 0,
+        "identity_anomaly": 0,
+        "exfil_signal": 0
+      },
+      "weights": {
+        "intercept": -2.7,
+        "ioc_match": 2.35,
+        "multi_source": 1.25,
+        "critical_asset": 0.85,
+        "privileged_identity": 1.05,
+        "malware_signal": 1.75,
+        "identity_anomaly": 1.35,
+        "exfil_signal": 1.85
+      },
+      "model_probability": 0.063,
+      "max_severity": 15
+    },
+    "ai_assist": {
+      "summary": "Observed 1 events across 1 source(s). Risk score 9/100. Evidence factors: baseline telemetry only.",
+      "untrusted_evidence_preview": [
+        "Known corporate VPN exit in Nigeria"
+      ],
+      "prompt_injection_flags": [],
+      "advisory_only": true
+    },
+    "planned_actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case"
+      }
+    ],
+    "actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case",
+        "status": "simulated"
+      }
+    ]
+  },
+  {
+    "incident_id": "SOAR-0005",
+    "event_ids": [
+      "TR-012"
+    ],
+    "entities": {
+      "users": [
+        "chidi.okafor"
+      ],
+      "assets": [
+        "HR-LT-018"
+      ]
+    },
+    "sources": [
+      "email"
+    ],
+    "evidence": [
+      {
+        "event_id": "TR-012",
+        "timestamp": "2026-08-19T08:25:00Z",
+        "source": "email",
+        "event_type": "message_blocked",
+        "user": "chidi.okafor",
+        "asset": "HR-LT-018",
+        "message": "Malicious attachment blocked before delivery",
+        "src_ip": "",
+        "dest_ip": "",
+        "domain": "cdn-update-check.example",
+        "file_hash": "",
+        "action": "blocked",
+        "severity": 50
+      }
+    ],
+    "risk_score": 44,
+    "severity": "medium",
+    "explanation": {
+      "features": {
+        "ioc_match": 1,
+        "multi_source": 0,
+        "critical_asset": 0,
+        "privileged_identity": 0,
+        "malware_signal": 0,
+        "identity_anomaly": 0,
+        "exfil_signal": 0
+      },
+      "weights": {
+        "intercept": -2.7,
+        "ioc_match": 2.35,
+        "multi_source": 1.25,
+        "critical_asset": 0.85,
+        "privileged_identity": 1.05,
+        "malware_signal": 1.75,
+        "identity_anomaly": 1.35,
+        "exfil_signal": 1.85
+      },
+      "model_probability": 0.4134,
+      "max_severity": 50
+    },
+    "ai_assist": {
+      "summary": "Observed 1 events across 1 source(s). Risk score 44/100. Evidence factors: ioc match.",
+      "untrusted_evidence_preview": [
+        "Malicious attachment blocked before delivery"
+      ],
+      "prompt_injection_flags": [],
+      "advisory_only": true
+    },
+    "planned_actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case"
+      },
+      {
+        "action": "notify_analyst",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Medium-or-higher candidates require human review"
+      }
+    ],
+    "actions": [
+      {
+        "action": "create_case",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Every correlated candidate receives an auditable case",
+        "status": "simulated"
+      },
+      {
+        "action": "notify_analyst",
+        "approval_required": false,
+        "dry_run": true,
+        "reason": "Medium-or-higher candidates require human review",
+        "status": "simulated"
+      }
+    ]
+  }
+]
