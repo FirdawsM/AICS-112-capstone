@@ -1,0 +1,17 @@
+test_critical_plan_requires_approval (test_lab6.Lab6Tests.test_critical_plan_requires_approval) ... ok
+test_critical_without_approval_stays_awaiting (test_lab6.Lab6Tests.test_critical_without_approval_stays_awaiting) ... ok
+test_expired_ioc_is_not_a_match (test_lab6.Lab6Tests.test_expired_ioc_is_not_a_match) ... expected failure
+test_idempotency_replay (test_lab6.Lab6Tests.test_idempotency_replay) ... ok
+test_low_confidence_ioc_is_not_a_match (test_lab6.Lab6Tests.test_low_confidence_ioc_is_not_a_match) ... ok
+test_enrichment_adds_context_and_ioc (test_pipeline.PipelineTests.test_enrichment_adds_context_and_ioc) ... ok
+test_hash_chain_detectable (test_pipeline.PipelineTests.test_hash_chain_detectable) ... ok
+test_naive_timestamp_rejected (test_pipeline.PipelineTests.test_naive_timestamp_rejected) ... ok
+test_normalize_timestamp_and_fields (test_pipeline.PipelineTests.test_normalize_timestamp_and_fields) ... ok
+test_prompt_injection_flag (test_pipeline.PipelineTests.test_prompt_injection_flag) ... ok
+test_score_is_explainable (test_pipeline.PipelineTests.test_score_is_explainable) ... ok
+test_severity_boundaries (test_pipeline.PipelineTests.test_severity_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.008s
+
+OK (expected failures=1)
