@@ -4,7 +4,7 @@ ID: PB-SOAR-001
 Name: Approval-gated response for correlated candidate incidents
 Version: 1.1.0
 Purpose: Turn a scored incident into an auditable case, analyst notification, read-only triage and, only with human approval, simulated containment.
-Owner: <your name>, SOC automation owner
+Owner: Firdaws Alnuur, SOC automation owner
 Safety: every action is a dry run. No real endpoint, identity, email or network system is changed.
 
 ## Trigger
