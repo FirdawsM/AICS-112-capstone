@@ -1,5 +1,9 @@
-flags raised:
-"prompt_injection_flags": []
+flags per incident:
+SOAR-0001 ['ignore (all|any|the) previous']
+SOAR-0002 []
+SOAR-0003 []
+SOAR-0004 []
+SOAR-0005 []
 high-impact actions still gated:
 "status": "awaiting_approval"
 "status": "awaiting_approval"

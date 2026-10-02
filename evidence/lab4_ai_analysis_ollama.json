@@ -1,0 +1,29 @@
+{
+    "summary": "Critical incident detected with high risk score (97) involving user amina.bello and asset FIN-LT-044. Multiple sources indicate malicious activity: email delivery of invoice link, proxy URL click, identity login from abnormal country (GH vs NG), MFA method addition, PowerShell execution, and large outbound transfers. Critical asset compromised via encoded PowerShell and potential data exfiltration.",
+    "confidence": "high",
+    "evidence": [
+        "Email delivered invoice link from external sender (TR-001)",
+        "User clicked external document link via proxy (TR-002)",
+        "Login from country GH (abnormal for user's country NG) (TR-003)",
+        "New authenticator method registered (TR-004)",
+        "Encoded PowerShell launched (TR-005)",
+        "Repeated outbound TLS connections (TR-006)",
+        "Archive file created (TR-007)",
+        "184 MB outbound transfer (TR-008)"
+    ],
+    "recommended_next_steps": [
+        "monitor",
+        "request_identity_disable_approval",
+        "request_identity_disable_approval",
+        "request_identity_disable_approval"
+    ],
+    "uncertainties": [
+        "Exact origin of PowerShell execution",
+        "Full scope of data exfiltration",
+        "Impact of repeated TLS connections"
+    ],
+    "approval_required": true,
+    "provider": "ollama:qwen3:4b",
+    "advisory_only": true,
+    "prompt_injection_flags": []
+}
