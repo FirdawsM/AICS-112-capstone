@@ -22,7 +22,7 @@ python3 evaluate.py --incidents output/training/incidents.json --truth lab_data/
 python3 run_pipeline.py --dataset lab_data/capstone --output output/capstone
 
 # 4. Audit chain check
-python3 verify_audit.py runtime/audit_log.jsonl
+python3 verify_audit.py evidence/capstone/audit_log_with_approvals.jsonl
 
 # 5. Console at http://127.0.0.1:8112
 python3 app.py
