@@ -110,7 +110,7 @@ def ollama_ai(incident: dict) -> dict:
     prompt = "Analyze this synthetic incident evidence. Separate observations from uncertainty and return the required JSON schema:\n" + json.dumps(evidence, ensure_ascii=False)
     payload = {"model": model, "stream": False, "think": False, "format": schema, "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}], "options": {"temperature": 0.1}}
     request = urllib.request.Request("http://127.0.0.1:11434/api/chat", data=json.dumps(payload).encode("utf-8"), headers={"Content-Type": "application/json"}, method="POST")
-    with urllib.request.urlopen(request, timeout=300) as response:
+    with urllib.request.urlopen(request, timeout=int(os.getenv("AICS112_OLLAMA_TIMEOUT", "300"))) as response:
         outer = json.loads(response.read().decode("utf-8"))
     result = json.loads(outer["message"]["content"])
     if result.get("confidence") not in {"low", "medium", "high"}:
