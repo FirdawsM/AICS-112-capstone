@@ -1,18 +1,17 @@
-# Individual reflection
+# Reflection: SOAR-0006
 
-## What I built
-I completed Labs 2 to 4 in the pipeline, added tests, wrote the approval-gated playbook, ran the training set to precision 1.0 and recall 1.0, then ran the blind capstone dataset and decided on SOAR-0006 myself.
+## Decision 1: isolate_endpoint (approved, simulated)
+I approved isolation of OPS-WS-009 because the endpoint showed encoded PowerShell launched from a spreadsheet process (CP-006), a 60-second beacon to 203.0.113.77 (CP-007) and a 96 MB upload to the same address (CP-009). Isolation stops the beacon and the exfiltration, can be reversed by releasing the host, and the evidence came from several independent sources.
 
-## What did not work first time
-The Ollama call timed out at 90 seconds and the console fell back to the offline model. I recorded the fallback instead of hiding it, then raised the timeout to prove the Ollama path worked.
+## Decision 2: disable_identity (denied)
+I denied this one to test the deny path and to confirm that a denied action is written to the audit log and is not executed. That was a test choice, not an operational judgement. In a real incident I would approve it, because the sign-in from Ghana (CP-004) is a confirmed account takeover and the account can be re-enabled if it turns out to be a false positive. Leaving it active keeps attacker access open.
 
-## My approval decisions on SOAR-0006
-- isolate_endpoint: approved (dry run). REASON: [write why]
-- disable_identity: denied. REASON: [write why]
-- revoke_oauth_grant: denied. REASON: [write why]
+## Decision 3: revoke_oauth_grant (denied)
+I denied this one for the same reason. In a real incident I would approve it, because the consent to the unverified app MailSync Pro (CP-005) gives persistence that survives a password reset, so a reset alone would not remove the attacker.
 
-## Limits I accept
-The data is synthetic, the model is small, and a perfect score on the training set does not prove it works on real traffic. [Add one limit you actually noticed.]
+## Limit I found
+The pipeline correlates events only by the same user or asset within a 45-minute window. Incidents on different users that share an attacker IP are not linked, so related activity can appear as separate incidents.
 
-## What I would change
-[Pick two from your improvement backlog and say why.]
+## Backlog items
+1. Link incidents that share an attacker IP or other indicator.
+2. Make the 30-minute approval expiry real and log the model name and prompt hash for AI calls.
