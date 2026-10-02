@@ -48,7 +48,7 @@ def parse_stix_indicators(path: Path) -> list[dict]:
         pattern = obj.get("pattern", "")
         match = re.search(r"=\s*'([^']+)'", pattern)
         if match:
-            indicators.append({"value": match.group(1).lower(), "confidence": int(obj.get("confidence", 0)), "labels": obj.get("labels", [])})
+            indicators.append({"value": match.group(1).lower(), "confidence": int(obj.get("confidence", 0)), "labels": obj.get("labels", []), "valid_from": obj.get("valid_from"), "valid_until": obj.get("valid_until")})
     return indicators
 
 
@@ -71,6 +71,19 @@ def normalize_event(raw: dict) -> dict:
     return result
 
 
+# Lab 7 improvement 1: indicators are only trusted inside their STIX validity window.
+def _parse_utc(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    return parsed.replace(tzinfo=timezone.utc) if parsed.tzinfo is None else parsed.astimezone(timezone.utc)
+
+
+def indicator_is_valid(indicator: dict, at: datetime) -> bool:
+    start, end = _parse_utc(indicator.get("valid_from")), _parse_utc(indicator.get("valid_until"))
+    return not ((start and at < start) or (end and at > end))
+
+
 def enrich_event(event: dict, assets: dict[str, dict], identities: dict[str, dict], indicators: list[dict]) -> dict:
     result = dict(event)
     asset = assets.get(event.get("asset", ""), {})
@@ -80,7 +93,8 @@ def enrich_event(event: dict, assets: dict[str, dict], identities: dict[str, dic
     result["privileged_identity"] = int(identity.get("privileged", 0) or 0)
     result["identity_risk_tier"] = identity.get("risk_tier", "")
     observed = {str(event.get(k, "")).lower() for k in ("domain", "src_ip", "dest_ip", "file_hash")} - {""}
-    matches = [i for i in indicators if i["value"] in observed and i["confidence"] >= 70]
+    at = _parse_utc(event.get("timestamp")) or datetime.now(timezone.utc)
+    matches = [i for i in indicators if i["value"] in observed and i["confidence"] >= 70 and indicator_is_valid(i, at)]
     result["ioc_matches"] = matches
     result["ioc_match"] = bool(matches)
     return result
@@ -104,6 +118,17 @@ def correlate(events: list[dict], window_minutes: int = 45) -> list[list[dict]]:
     return groups
 
 
+# Lab 7 improvement 2: do not treat prevented or change-approved activity as a malware signal.
+APPROVED_CHANGE = re.compile(r"\bCHG-\d+\b", re.I)
+MALWARE_TYPES = {"process_start", "credential_access", "file_quarantined"}
+
+
+def is_benign_context(event: dict) -> bool:
+    approved_change = bool(APPROVED_CHANGE.search(str(event.get("message", "")))) and "approved" in str(event.get("message", "")).lower()
+    prevented = str(event.get("action", "")).lower() in {"blocked", "quarantined"} and event.get("event_type") in {"message_blocked", "file_quarantined"}
+    return approved_change or prevented
+
+
 def incident_features(group: list[dict]) -> dict[str, int]:
     sources = {event["source"] for event in group}
     types = {event["event_type"] for event in group}
@@ -112,7 +137,7 @@ def incident_features(group: list[dict]) -> dict[str, int]:
         "multi_source": int(len(sources) >= 2),
         "critical_asset": int(max((event.get("asset_criticality", 0) for event in group), default=0) >= 4),
         "privileged_identity": int(any(event.get("privileged_identity") for event in group)),
-        "malware_signal": int(bool(types & {"process_start", "credential_access", "file_quarantined"}) and max(event["severity"] for event in group) >= 60),
+        "malware_signal": int(any(event["event_type"] in MALWARE_TYPES and not is_benign_context(event) and event["severity"] >= 60 for event in group)),
         "identity_anomaly": int(bool(types & {"mfa_method_added", "oauth_consent", "account_lockout"}) or sum(t == "login_failure" for t in [event["event_type"] for event in group]) >= 3),
         "exfil_signal": int("large_upload" in types),
     }
@@ -164,10 +189,13 @@ def plan_actions(incident: dict) -> list[dict]:
     if score >= 65:
         actions.append({"action": "collect_endpoint_triage", "approval_required": False, "dry_run": True, "reason": "Read-only evidence collection"})
     if score >= 85:
-        actions.extend([
-            {"action": "isolate_endpoint", "approval_required": True, "dry_run": True, "reason": "High-impact containment action"},
-            {"action": "disable_identity", "approval_required": True, "dry_run": True, "reason": "High-impact identity action"},
-        ])
+        features = incident.get("explanation", {}).get("features")
+        # Lab 7 improvement 3: isolate a host only when there is endpoint-level evidence (legacy plans without features keep isolation).
+        if features is None or features.get("malware_signal"):
+            actions.append({"action": "isolate_endpoint", "approval_required": True, "dry_run": True, "reason": "High-impact containment action"})
+        actions.append({"action": "disable_identity", "approval_required": True, "dry_run": True, "reason": "High-impact identity action"})
+        if any(row.get("event_type") == "oauth_consent" for row in incident.get("evidence", [])):
+            actions.append({"action": "revoke_oauth_grant", "approval_required": True, "dry_run": True, "reason": "Unverified OAuth consent must be revoked"})
     return actions
 
 

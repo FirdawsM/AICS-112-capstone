@@ -20,7 +20,7 @@ WEB = ROOT / "web"
 RUNTIME = ROOT / "runtime"
 RUNTIME.mkdir(exist_ok=True)
 ALLOWED_DATASETS = {"training", "capstone"}
-ALLOWED_ACTIONS = {"create_case", "notify_analyst", "collect_endpoint_triage", "isolate_endpoint", "disable_identity"}
+ALLOWED_ACTIONS = {"create_case", "notify_analyst", "collect_endpoint_triage", "isolate_endpoint", "disable_identity", "revoke_oauth_grant"}
 ALLOWED_AI_STEPS = {"verify_identity", "collect_triage", "notify_analyst", "request_isolation_approval", "request_identity_disable_approval", "preserve_evidence", "close_as_benign", "monitor"}
 
 

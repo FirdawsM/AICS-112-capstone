@@ -1,0 +1,2 @@
+Created 9 candidate incident(s) in output/capstone
+All actions are dry-run simulations; no real account or endpoint was changed.

@@ -18,7 +18,6 @@ class Lab6Tests(unittest.TestCase):
         result = enrich_event(event, {}, {}, indicators)
         self.assertFalse(result["ioc_match"])
 
-    @unittest.expectedFailure
     def test_expired_ioc_is_not_a_match(self):
         # Known gap: enrich_event has no expiry check yet (see improvement backlog).
         event = {"event_id": "N2", "domain": "old.example"}

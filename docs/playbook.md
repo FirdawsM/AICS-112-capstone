@@ -2,7 +2,7 @@
 
 ID: PB-SOAR-001
 Name: Approval-gated response for correlated candidate incidents
-Version: 1.0.0
+Version: 1.1.0
 Purpose: Turn a scored incident into an auditable case, analyst notification, read-only triage and, only with human approval, simulated containment.
 Owner: <your name>, SOC automation owner
 Safety: every action is a dry run. No real endpoint, identity, email or network system is changed.
@@ -16,7 +16,7 @@ incident_id, risk_score, severity band, entities (users, assets), event_ids, ai_
 ## Preconditions
 1. All event timestamps normalized to UTC.
 2. Enrichment completed (asset criticality, identity privilege, IOC match).
-3. The action is in the fixed allowlist: create_case, notify_analyst, collect_endpoint_triage, isolate_endpoint, disable_identity.
+3. The action is in the fixed allowlist: create_case, notify_analyst, collect_endpoint_triage, isolate_endpoint, disable_identity, revoke_oauth_grant.
 
 ## Entity resolution
 Events join one incident when they share the same user or the same asset and the gap to the previous event is 45 minutes or less.
@@ -27,6 +27,13 @@ Events join one incident when they share the same user or the same asset and the
 3. collect_endpoint_triage: if score >= 65. Read-only. Timeout 60 s. On error: continue, mark triage_missing.
 4. isolate_endpoint: if score >= 85. Approval required.
 5. disable_identity: if score >= 85. Approval required.
+6. revoke_oauth_grant: if score >= 85 and an oauth_consent event is present. Approval required.
+
+## Action policy (v1.1.0)
+- isolate_endpoint is planned only when the incident has endpoint-level evidence (malware_signal). Identity-only incidents are never isolated.
+- revoke_oauth_grant is planned, approval required, when an oauth_consent event is in the evidence.
+- Indicators match only inside their STIX valid_from/valid_until window, judged at event time.
+- Blocked or quarantined events and change-approved activity (an approved CHG ticket) do not count as a malware signal.
 
 ## Branches
 score < 40: step 1 only.
