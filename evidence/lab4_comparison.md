@@ -16,6 +16,6 @@
 4. Conclusion: the model adds useful event-level detail but is not reliable for choosing actions. The allowlist, the advisory-only rule and the human approval gate are what keep it safe.
 
 ## Run notes
-- First attempts hit the timeout and fell back safely (see lab4_ai_analysis_ollama_FALLBACK.json and lab4_fallback_timeout screenshots).
-- Fix that worked: /no_think in the prompt, freeing RAM (the machine was swapping), and AICS112_OLLAMA_TIMEOUT.
+- First attempts hit the 90 s timeout and fell back safely (screenshot: lab4_fallback_timeout.png). lab4_ai_analysis_ollama_FALLBACK.json was regenerated afterwards with AICS112_OLLAMA_TIMEOUT=2 to reproduce the same fallback path.
+- Fix that worked: `"think": false` in the Ollama request, freeing RAM (the machine was swapping), and raising the timeout from 90 s to 300 s. The timeout is now read from AICS112_OLLAMA_TIMEOUT (default 300).
 - lab4_injection_first_attempt_SUPERSEDED.png shows a bug in my first check (the grep could not read the indented JSON, so it printed an empty flag list). lab4_injection_corrected.png and evidence/lab4_injection.txt show the correct result: SOAR-0001 raised `ignore (all|any|the) previous`, both high-impact actions stayed awaiting_approval, and dry_run was true on 10 of 10 audit lines.

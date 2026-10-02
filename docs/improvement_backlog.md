@@ -6,7 +6,7 @@ Owner for all items: Firdaws Alnuur Mohammed. Findings come from Labs 4 to 6 evi
 | ID | Item | Priority | Acceptance test | Target |
 |---|---|---|---|---|
 | R1 | Reject expired IOCs in `enrich_event` (check `valid_until`) | High | `test_expired_ioc_is_not_a_match` passes and no longer needs `expectedFailure` | v1.1 |
-| R2 | Make the Ollama timeout configurable by default and document `/no_think`, warm-up and RAM needs | High | On an 8 GB CPU-only laptop, "Ask AI" returns `ollama:` with no `provider_error`, or a clear fallback message | v1.1 |
+| R2 | Document Ollama warm-up and RAM needs in the README (timeout is now configurable via `AICS112_OLLAMA_TIMEOUT`; the request sets `think` to false) | High | On an 8 GB CPU-only laptop, "Ask AI" returns `ollama:` with no `provider_error`, or a clear fallback message | v1.1 |
 | R3 | Use the idempotency ledger inside the real pipeline, not only in `idempotency_demo.py` | Medium | Running the pipeline twice on the same incident records `already_completed` for every action | v1.2 |
 | R4 | Show a friendly message when the capstone dataset has not been extracted | Low | Selecting "Blind capstone" early shows a readable instruction, not a file-not-found error | v1.1 |
 

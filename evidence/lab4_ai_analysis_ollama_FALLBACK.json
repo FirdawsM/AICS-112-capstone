@@ -1,0 +1,30 @@
+{
+    "provider": "offline-explainable-baseline",
+    "summary": "Observed 8 events across 5 source(s). Risk score 97/100. Evidence factors: ioc match, multi source, critical asset, malware signal, identity anomaly, exfil signal.",
+    "confidence": "high",
+    "evidence": [
+        "ioc match",
+        "multi source",
+        "critical asset",
+        "malware signal",
+        "identity anomaly",
+        "exfil signal"
+    ],
+    "recommended_next_steps": [
+        "preserve_evidence",
+        "verify_identity",
+        "notify_analyst",
+        "collect_triage",
+        "request_isolation_approval",
+        "request_identity_disable_approval"
+    ],
+    "uncertainties": [
+        "Synthetic classroom data",
+        "No live endpoint state",
+        "Model output requires analyst verification"
+    ],
+    "approval_required": true,
+    "prompt_injection_flags": [],
+    "advisory_only": true,
+    "provider_error": "Ollama unavailable or invalid output; safe fallback used: timed out"
+}
