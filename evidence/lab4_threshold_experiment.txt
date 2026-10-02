@@ -1,0 +1,11 @@
+threshold  TP FP FN  precision recall
+       30   8  1  0       0.89   1.00
+       40   8  1  0       0.89   1.00
+       50   8  0  0       1.00   1.00
+       65   8  0  0       1.00   1.00
+       75   8  0  0       1.00   1.00
+       85   8  0  0       1.00   1.00
+
+Recommendation: escalate at 65. Notify-only at 40. Containment still needs named human approval.
+Cost: 30 and 40 add one false positive (SOAR-0005, score 44): analyst time. Above 85 risks missing a real attack, which costs more.
+Limit: training data has one attack chain, so equal results at 50-85 are weak evidence. Re-check on the blind capstone data.
