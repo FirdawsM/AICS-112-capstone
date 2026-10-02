@@ -124,8 +124,12 @@ def incident_features(group: list[dict]) -> dict[str, int]:
 def score_group(group: list[dict]) -> tuple[int, dict]:
     # TODO LAB 4: calculate a logistic probability from FEATURE_WEIGHTS,
     # combine 70% model probability with 30% maximum event severity, and return
-    # both the 0-100 score and an explainability dictionary.
-    raise NotImplementedError("Complete score_group in Lab 4")
+    features = incident_features(group)
+    z = FEATURE_WEIGHTS["intercept"] + sum(FEATURE_WEIGHTS[k] * v for k, v in features.items())
+    probability = 1 / (1 + math.exp(-z))
+    max_sev = max(e["severity"] for e in group)
+    score = round(100 * (0.7 * probability + 0.3 * (max_sev / 100)))
+    return max(0, min(100, score)), {"features": features, "weights": FEATURE_WEIGHTS, "model_probability": round(probability, 4), "max_severity": max_sev}
 
 
 def sanitize_untrusted_text(text: str) -> tuple[str, list[str]]:
