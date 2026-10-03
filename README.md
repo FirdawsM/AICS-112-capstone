@@ -1,6 +1,6 @@
 # AICS-112 AI-Driven SOAR Capstone: SavannaPay
 
-Student: Firdaws Alnuur | ICDFA registration: 2026-AICDF-16701
+Student: Firdaws Alnuur Mohammed | Registration no.: 2026/AICDF/16701
 
 A mini SOAR pipeline for a synthetic microfinance environment. It ingests events from email, identity, endpoint, proxy and network sources, normalizes and enriches them, correlates them into incidents, scores risk, and plans response actions. Every action is dry run. High-impact containment waits for a named human decision, and every decision lands in a hash-chained audit log. An AI analyst (local Ollama model or an offline fallback) advises only.
 
@@ -37,14 +37,27 @@ AICS112_AI_PROVIDER=ollama AICS112_OLLAMA_MODEL=qwen3:4b AICS112_OLLAMA_TIMEOUT=
 
 The badge should read `ollama • qwen3:4b • dry-run-only`. The default 90 second limit timed out on my CPU-only machine, so the timeout is set with `AICS112_OLLAMA_TIMEOUT`. If Ollama fails or times out, the console shows the error and uses the offline model. Keep Ollama bound to 127.0.0.1.
 
+## Deliverables (where each required item is)
+
+| # | Required item | File | Format |
+|---|---------------|------|--------|
+| 1 | Source package | this ZIP (app.py, soar_lab/, tests/, lab_data/, scripts) | ZIP |
+| 2 | Evidence manifest | docs/evidence_manifest.csv | CSV |
+| 3 | Playbook specification | docs/playbook.pdf | PDF |
+| 4 | Model card | docs/model_card.pdf | PDF |
+| 5 | Test and metrics report | docs/test_and_metrics_report.pdf | PDF |
+| 6 | Incident report (SOAR-0006) | docs/Lab7_Incident_Report_SOAR-0006.pdf | PDF |
+| 7 | Demonstration | live or recorded walkthrough, delivered as the LMS instructs | n/a |
+| 8 | Individual statement (contribution, AI-use declaration, reflection) | docs/AI_use_declaration.pdf (signed) | PDF |
+
 ## Evidence map
 
 | Folder | Contents |
 |--------|----------|
 | docs/lab1/ | Architecture diagram, risk register, action classification, 150-word justification, dataset evidence |
-| docs/ | Incident report, individual reflection |
+| docs/ | The submitted deliverables, listed in the table above, plus reflection.md and improvement_backlog.md |
 | evidence/ | Test output, metrics, AI comparison, injection test, fallback record |
-| evidence/lab5/ | Playbook, approval and idempotency evidence |
+| evidence/lab5/ | Approval and idempotency evidence (pending and approved runs) |
 | evidence/capstone/ | Capstone incidents.json, audit logs, decisions.jsonl, chain check |
 | evidence/screenshots/ | Console screenshots for Labs 4, 5 and 7 |
 
@@ -59,4 +72,3 @@ The badge should read `ollama • qwen3:4b • dry-run-only`. The default 90 sec
 
 I used Claude (Anthropic) as a study and engineering assistant. It guided the lab walkthrough, drafted test code and documentation, and helped me debug command and path errors. I ran every command myself on my own machine, checked outputs against the evidence files, and can explain the submitted code and each approval decision. Where AI output was wrong or incomplete, I corrected it. I accept responsibility for every automation and incident-response decision in this submission. The signed declaration page (Template F) is in docs/.
 
-<!-- EDIT: change this paragraph so it matches exactly what you used AI for. -->
