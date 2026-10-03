@@ -39,9 +39,9 @@ Events join one incident when they share the same user or the same asset and the
 score < 40: step 1 only.
 40 to 64: steps 1 and 2.
 65 to 84: steps 1 to 3, any containment is approval gated.
-85 or more: steps 1 to 3, then steps 4 and 5 wait for a named human.
+85 or more: steps 1 to 3, then steps 4 and 5 (and step 6 when an oauth_consent event is present) wait for a named human.
 
-## Approvals (steps 4 and 5)
+## Approvals (steps 4, 5 and 6)
 Approval type: named human decision, approve or deny, recorded with analyst name.
 Approver role: SOC lead.
 Expiry: 30 minutes. After expiry the step returns to awaiting_approval and is re-requested.
@@ -57,6 +57,7 @@ simulated, denied, awaiting_approval, already_completed, failed_logged.
 ## Rollback and compensating steps
 isolate_endpoint: release isolation after analyst review (compensating dry-run step).
 disable_identity: re-enable account after identity verification.
+revoke_oauth_grant: a revoked grant is not silently restored; after identity verification the user re-consents, or an analyst re-authorises the app (compensating dry-run step).
 Each compensating step needs its own approval and audit record.
 
 ## Evidence to preserve
